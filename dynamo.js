@@ -1,0 +1,43 @@
+var AWS = require("aws-sdk");
+
+AWS.config.update({
+    accessKeyId: "blablabla",
+    secretAccessKey: "abc",
+    region: "us-west-2"
+});
+
+var documentClient = new AWS.DynamoDB.DocumentClient({ endpoint: new AWS.Endpoint("http://localhost:8000") });
+
+function isUserNameExist(username, callback) {
+    documentClient.scan(
+        {
+            TableName: "user",
+            FilterExpression: "username = :username",
+            ExpressionAttributeValues: { ":username": username }
+        },
+        callback
+    );
+}
+function addUser(params, callback) {
+    isUserNameExist(params.username, function(error, data) {
+        if (error) {
+            callback(error, null);
+        } else {
+            if (data.Count > 0) {
+                callback(new Error("username is not available"), null);
+            } else {
+                documentClient.put(
+                    {
+                        TableName: "user",
+                        Item: params
+                    },
+                    callback
+                );
+            }
+        }
+    });
+}
+module.exports = {
+    isUserNameExist: isUserNameExist,
+    addUser: addUser
+};
