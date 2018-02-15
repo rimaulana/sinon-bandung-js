@@ -3,6 +3,10 @@ var child = require("child_process");
 // check whether the is running the platform is linux
 var isLinux = process.platform === "linux";
 
+function spyOnMe() {
+    console.log("what a creep!");
+}
+
 function isRouteExisted(route) {
     var result = child.execSync("route -n | awk 'NR>2{if($1==\"" + route + '") print $1"#"$2"#"$8;}\'');
     result = result.toString().split("#");
@@ -29,9 +33,8 @@ function addRoute(params) {
     }
 }
 
-console.log(isRouteExisted("192.168.17.133"));
-//addRoute({
-//    dest: "192.168.17.133",
-//    gw: "192.168.197.1",
-//    if: "ens33"
-//});
+module.exports = {
+    isRouteExisted: isRouteExisted,
+    addRoute: addRoute,
+    spyOnMe: spyOnMe
+};
