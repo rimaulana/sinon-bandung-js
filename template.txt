@@ -1,0 +1,3 @@
+[config]
+	server_url=ldaps://#SERVER_IP:#SERVER_PORT/
+	username=#USER_NAME
