@@ -22,7 +22,7 @@ const retryWithCallback = (params, callback, times, delay) => {
 };
 
 const callWithCallback = (url, callback) => {
-  retryWithCallback(url, callback, 3, 2000);
+  retryWithCallback(url, callback, 3, 20);
 };
 
 module.exports = {

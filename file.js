@@ -1,25 +1,30 @@
 const fs = require('fs');
 const request = require('request');
 
-const parseJSON = async (data) => {
-  try {
-    const result = JSON.parse(data);
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const read = (url, callback) => {
   fs.readFile(url, (error, data) => {
+    callback(error, data);
+  });
+};
+
+const generate = (templatePath, map, callback) => {
+  const urlRegex = new RegExp('(http[s]?:\\/\\/)([^\\/\\s]+\\/)(.*)');
+  const innerCallback = (error, data) => {
     if (error) {
       callback(error.message, null);
     } else {
-      parseJSON(data.toString())
-        .then(result => callback(null, result))
-        .catch(err => callback(err.message, null));
+      let result = data.toString();
+      map.forEach((item) => {
+        result = result.replace(item.Key, item.Replacement);
+      });
+      callback(null, result);
     }
-  });
+  };
+  if (templatePath.match(urlRegex)) {
+    download(templatePath, innerCallback);
+  } else {
+    read(templatePath, innerCallback);
+  }
 };
 
 const download = (url, callback) => {
@@ -29,5 +34,5 @@ const download = (url, callback) => {
 };
 
 module.exports = {
-  read, parseJSON, download,
+  download, read, generate,
 };
