@@ -1,14 +1,14 @@
 const fs = require('fs');
 const request = require('request');
 
-const parseJSON = data => new Promise((resolve, reject) => {
+const parseJSON = async (data) => {
   try {
     const result = JSON.parse(data);
-    resolve(result);
+    return result;
   } catch (error) {
-    reject(error);
+    throw error;
   }
-});
+};
 
 const read = (url, callback) => {
   fs.readFile(url, (error, data) => {

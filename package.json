@@ -4,8 +4,8 @@
     "description": "Collection of codes showing how to use Sinon.js in Bandung.js meetup",
     "main": "index.js",
     "scripts": {
-        "test": "node ./node_modules/mocha/bin/mocha --reporter=spec tests/*.js --exit",
-        "cover": "node ./node_modules/nyc/bin/nyc.js --reporter=text-summary ./node_modules/mocha/bin/mocha --reporter=nyan tests/*.js --exit && npm run report",
+        "test": "node ./node_modules/mocha/bin/mocha --reporter=spec tests/*.js",
+        "cover": "node ./node_modules/nyc/bin/nyc.js --reporter=text-summary ./node_modules/mocha/bin/mocha --reporter=nyan tests/*.js && npm run report",
         "report": "node ./node_modules/nyc/bin/nyc.js report --reporter=lcov"
     },
     "keywords": [
