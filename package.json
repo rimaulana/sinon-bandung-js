@@ -26,7 +26,7 @@
     "author": "Rio Maulana <rimaulana@outlook.com> (https://github.com/rimaulana)",
     "license": "MIT",
     "dependencies": {
-        "aws-sdk": "^2.193.0",
+        "aws-sdk": "^2.814.0",
         "request": "^2.88.0"
     },
     "devDependencies": {
